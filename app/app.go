@@ -1,7 +1,9 @@
 package app
 
-import "log"
+import "github.com/gofiber/fiber/v2"
 
 func Start() {
-	log.Print("Starting app")
+	app := fiber.New()
+
+	app.Listen(":8080")
 }
