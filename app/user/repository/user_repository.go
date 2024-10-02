@@ -6,6 +6,6 @@ import (
 )
 
 type UserRepository interface {
-	Insert(ctx context.Context, user entity.User) error
+	Insert(ctx context.Context, user entity.User) (entity.User, error)
 	GetByEmail(ctx context.Context, email string) (entity.User, error)
 }

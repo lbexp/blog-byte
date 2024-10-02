@@ -16,22 +16,30 @@ func NewUserMysqlRepository(conn *sql.DB) user_repository.UserRepository {
 	return &userMysqlRepository{conn}
 }
 
-func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) error {
-	query := "INSERT INTO users(name, email, password_hash) VALUES(?, ?, ?)"
+func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) (entity.User, error) {
+	query := "INSERT INTO users(name, email, password_hash) VALUES(?, ?, ?) RETURNING *"
 
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Insert user query preparation error")
-		return err
+		return entity.User{}, err
 	}
 
-	_, err = stmt.ExecContext(ctx, user.Name, user.Email, user.PasswordHash)
+	userRes := entity.User{}
+	err = stmt.QueryRowContext(ctx, user.Name, user.Email, user.PasswordHash).Scan(
+		&userRes.Id,
+		&userRes.Name,
+		&userRes.Email,
+		&userRes.PasswordHash,
+		&userRes.CreatedAt,
+		&userRes.UpdatedAt,
+	)
 	if err != nil {
 		log.Print("Insert user query execution error")
-		return err
+		return entity.User{}, err
 	}
 
-	return nil
+	return userRes, nil
 }
 
 func (repo *userMysqlRepository) GetByEmail(ctx context.Context, email string) (entity.User, error) {
