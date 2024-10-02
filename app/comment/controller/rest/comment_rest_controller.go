@@ -17,7 +17,7 @@ type commentRestController struct {
 	validate       *validator.Validate
 }
 
-func NewCommentRestController(commentUsecase comment_usecase.CommentUsecase, validate *validator.Validate) comment_controller.CommentController {
+func New(commentUsecase comment_usecase.CommentUsecase, validate *validator.Validate) comment_controller.CommentController {
 	return &commentRestController{
 		commentUsecase: commentUsecase,
 		validate:       validate,

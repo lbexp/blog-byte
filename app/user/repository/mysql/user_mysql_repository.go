@@ -13,7 +13,7 @@ type userMysqlRepository struct {
 	Conn *sql.DB
 }
 
-func NewUserMysqlRepository(conn *sql.DB) user_repository.UserRepository {
+func New(conn *sql.DB) user_repository.UserRepository {
 	return &userMysqlRepository{conn}
 }
 

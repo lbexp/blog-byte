@@ -17,7 +17,7 @@ type commentUsecase struct {
 	postRepo    post_repository.PostRepository
 }
 
-func NewCommentUsecase(commentRepo comment_repository.CommentRepository, postRepo post_repository.PostRepository) CommentUsecase {
+func New(commentRepo comment_repository.CommentRepository, postRepo post_repository.PostRepository) CommentUsecase {
 	return &commentUsecase{
 		commentRepo: commentRepo,
 	}

@@ -18,7 +18,7 @@ type postUsecase struct {
 	postRepo post_repository.PostRepository
 }
 
-func NewPostUsecase(postRepo post_repository.PostRepository) PostUsecase {
+func New(postRepo post_repository.PostRepository) PostUsecase {
 	return &postUsecase{
 		postRepo: postRepo,
 	}

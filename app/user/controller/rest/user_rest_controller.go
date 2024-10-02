@@ -16,7 +16,7 @@ type userRestController struct {
 	validate    *validator.Validate
 }
 
-func NewUserRestController(userUsecase user_usecase.UserUsecase, validate *validator.Validate) user_controller.UserController {
+func New(userUsecase user_usecase.UserUsecase, validate *validator.Validate) user_controller.UserController {
 	return &userRestController{
 		userUsecase: userUsecase,
 		validate:    validate,

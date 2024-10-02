@@ -18,7 +18,7 @@ type postRestController struct {
 	validate    *validator.Validate
 }
 
-func NewPostRestController(postUsecase post_usecase.PostUsecase, validate *validator.Validate) post_controller.PostController {
+func New(postUsecase post_usecase.PostUsecase, validate *validator.Validate) post_controller.PostController {
 	return &postRestController{
 		postUsecase: postUsecase,
 		validate:    validate,

@@ -7,15 +7,13 @@ import (
 	"context"
 	"database/sql"
 	"log"
-
-	"github.com/gofiber/fiber/v2"
 )
 
 type postMysqlRepository struct {
 	Conn *sql.DB
 }
 
-func NewPostMysqlRepository(conn *sql.DB) post_repository.PostRepository {
+func New(conn *sql.DB) post_repository.PostRepository {
 	return &postMysqlRepository{conn}
 }
 

@@ -25,17 +25,17 @@ func registerRoutes(app *fiber.App, dbConn *sql.DB, validate *validator.Validate
 	postId := posts.Group("/:post_id")
 	comments := postId.Group("/comments")
 
-	userRepo := user_mysql_repository.NewUserMysqlRepository(dbConn)
-	userUcase := user_usecase.NewUserUsecase(userRepo)
-	userCtrl := user_rest_controller.NewUserRestController(userUcase, validate)
+	userRepo := user_mysql_repository.New(dbConn)
+	userUcase := user_usecase.New(userRepo)
+	userCtrl := user_rest_controller.New(userUcase, validate)
 
-	postRepo := post_mysql_repository.NewPostMysqlRepository(dbConn)
-	postUcase := post_usecase.NewPostUsecase(postRepo)
-	postCtrl := post_rest_controller.NewPostRestController(postUcase, validate)
+	postRepo := post_mysql_repository.New(dbConn)
+	postUcase := post_usecase.New(postRepo)
+	postCtrl := post_rest_controller.New(postUcase, validate)
 
-	commentRepo := comment_mysql_repository.NewCommentMysqlRepository(dbConn)
-	commentUcase := comment_usecase.NewCommentUsecase(commentRepo, postRepo)
-	commentCtrl := comment_rest_controller.NewCommentRestController(commentUcase, validate)
+	commentRepo := comment_mysql_repository.New(dbConn)
+	commentUcase := comment_usecase.New(commentRepo, postRepo)
+	commentCtrl := comment_rest_controller.New(commentUcase, validate)
 
 	// Public routes - begin
 	v1.Post("/login", userCtrl.Login)

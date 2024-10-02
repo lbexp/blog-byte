@@ -13,7 +13,7 @@ type commentMysqlRepository struct {
 	Conn *sql.DB
 }
 
-func NewCommentMysqlRepository(conn *sql.DB) comment_repository.CommentRepository {
+func New(conn *sql.DB) comment_repository.CommentRepository {
 	return &commentMysqlRepository{conn}
 }
 
