@@ -3,6 +3,7 @@ package user_mysql_repository
 import (
 	"blog-byte/app/entity"
 	user_repository "blog-byte/app/user/repository"
+	error_utils "blog-byte/app/utility/error"
 	"context"
 	"database/sql"
 	"log"
@@ -22,7 +23,7 @@ func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) (
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Insert user query preparation error")
-		return entity.User{}, err
+		return entity.User{}, error_utils.ErrorInternalServer
 	}
 
 	userRes := entity.User{}
@@ -36,7 +37,7 @@ func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) (
 	)
 	if err != nil {
 		log.Print("Insert user query execution error")
-		return entity.User{}, err
+		return entity.User{}, error_utils.ErrorInternalServer
 	}
 
 	return userRes, nil
@@ -56,7 +57,7 @@ func (repo *userMysqlRepository) GetByEmail(ctx context.Context, email string) (
 	)
 	if err != nil {
 		log.Print("Select user by email query error")
-		return user, err
+		return user, error_utils.ErrorInternalServer
 	}
 
 	return user, nil

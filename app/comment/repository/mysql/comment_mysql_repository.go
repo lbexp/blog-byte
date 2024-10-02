@@ -3,6 +3,7 @@ package comment_mysql_repository
 import (
 	comment_repository "blog-byte/app/comment/repository"
 	"blog-byte/app/entity"
+	error_utils "blog-byte/app/utility/error"
 	"context"
 	"database/sql"
 	"log"
@@ -22,13 +23,13 @@ func (repo *commentMysqlRepository) Insert(ctx context.Context, comment entity.C
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Insert comment query preparation error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	_, err = stmt.ExecContext(ctx, comment.PostId, comment.AuthorName, comment.Content)
 	if err != nil {
 		log.Print("Insert comment query execution error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	return nil
@@ -40,7 +41,7 @@ func (repo *commentMysqlRepository) GetAllByPostId(ctx context.Context, postId i
 	rows, err := repo.Conn.QueryContext(ctx, query, postId)
 	if err != nil {
 		log.Print("Select comments by post_id query error")
-		return nil, err
+		return nil, error_utils.ErrorInternalServer
 	}
 	defer func() {
 		errClose := rows.Close()
@@ -62,7 +63,7 @@ func (repo *commentMysqlRepository) GetAllByPostId(ctx context.Context, postId i
 		)
 		if err != nil {
 			log.Print("Select comments by post_id data population error")
-			return nil, err
+			return nil, error_utils.ErrorInternalServer
 		}
 
 		comments = append(comments, comment)

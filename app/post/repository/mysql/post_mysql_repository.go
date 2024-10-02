@@ -3,6 +3,7 @@ package post_mysql_repository
 import (
 	"blog-byte/app/entity"
 	post_repository "blog-byte/app/post/repository"
+	error_utils "blog-byte/app/utility/error"
 	"context"
 	"database/sql"
 	"log"
@@ -24,13 +25,13 @@ func (repo *postMysqlRepository) Insert(ctx context.Context, post entity.Post) e
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Insert post query preparation error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	_, err = stmt.ExecContext(ctx, post.Title, post.Content, post.AuthorId)
 	if err != nil {
 		log.Print("Insert post query execution error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	return nil
@@ -51,7 +52,7 @@ func (repo *postMysqlRepository) GetById(ctx context.Context, id int) (entity.Po
 	)
 	if err != nil {
 		log.Print("Select post by ID query error")
-		return post, err
+		return post, error_utils.ErrorInternalServer
 	}
 
 	return post, nil
@@ -63,7 +64,7 @@ func (repo *postMysqlRepository) GetAll(ctx context.Context, limit int, offset i
 	rows, err := repo.Conn.QueryContext(ctx, query, limit, offset)
 	if err != nil {
 		log.Print("Select posts query error")
-		return nil, err
+		return nil, error_utils.ErrorInternalServer
 	}
 	defer func() {
 		errClose := rows.Close()
@@ -87,7 +88,7 @@ func (repo *postMysqlRepository) GetAll(ctx context.Context, limit int, offset i
 		)
 		if err != nil {
 			log.Print("Select posts data poopulation error")
-			return nil, err
+			return nil, error_utils.ErrorInternalServer
 		}
 
 		posts = append(posts, post)
@@ -102,19 +103,19 @@ func (repo *postMysqlRepository) Update(ctx context.Context, post entity.Post) e
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Update post query preparation error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	res, err := stmt.ExecContext(ctx, post.Title, post.Content)
 	if err != nil {
 		log.Print("Update post query execution error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	affected, err := res.RowsAffected()
 	if affected == 0 || err != nil {
 		log.Print("Update post query affect no row")
-		return fiber.NewError(fiber.StatusInternalServerError, "Internal server error")
+		return error_utils.ErrorInternalServer
 	}
 
 	return nil
@@ -126,18 +127,19 @@ func (repo *postMysqlRepository) Delete(ctx context.Context, id int) error {
 	stmt, err := repo.Conn.PrepareContext(ctx, query)
 	if err != nil {
 		log.Print("Delete post query preparation error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	res, err := stmt.ExecContext(ctx, id)
 	if err != nil {
 		log.Print("Delete post query execution error")
-		return err
+		return error_utils.ErrorInternalServer
 	}
 
 	affected, err := res.RowsAffected()
 	if affected == 0 || err != nil {
 		log.Print("Delete post query affect no row")
+		return error_utils.ErrorInternalServer
 	}
 
 	return nil
