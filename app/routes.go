@@ -34,7 +34,7 @@ func registerRoutes(app *fiber.App, dbConn *sql.DB, validate *validator.Validate
 	postCtrl := post_rest_controller.NewPostRestController(postUcase, validate)
 
 	commentRepo := comment_mysql_repository.NewCommentMysqlRepository(dbConn)
-	commentUcase := comment_usecase.NewCommentUsecase(commentRepo)
+	commentUcase := comment_usecase.NewCommentUsecase(commentRepo, postRepo)
 	commentCtrl := comment_rest_controller.NewCommentRestController(commentUcase, validate)
 
 	// Public routes - begin
