@@ -5,6 +5,7 @@ import (
 	"blog-byte/app/middleware"
 	"log"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -19,6 +20,10 @@ func Start() {
 
 	app := fiber.New()
 	app.Use(middleware.Cors)
+
+	validate := validator.New(validator.WithRequiredStructEnabled())
+
+	registerRoutes(app, dbConn, validate)
 
 	err := app.Listen(":8080")
 	log.Fatal(err)
