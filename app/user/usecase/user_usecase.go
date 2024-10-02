@@ -3,9 +3,9 @@ package user_usecase
 import (
 	"blog-byte/app/entity"
 	user_repository "blog-byte/app/user/repository"
-	bcrypt_utils "blog-byte/app/utils/bcrypt"
-	error_utils "blog-byte/app/utils/error"
-	jwt_utils "blog-byte/app/utils/jwt"
+	bcrypt_utils "blog-byte/app/utility/bcrypt"
+	error_utils "blog-byte/app/utility/error"
+	jwt_utils "blog-byte/app/utility/jwt"
 	"context"
 	"log"
 )
