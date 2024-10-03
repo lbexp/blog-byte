@@ -19,7 +19,7 @@ func Start() {
 	}()
 
 	app := fiber.New()
-	app.Use(middleware.Cors)
+	app.Use(middleware.Cors())
 
 	validate := validator.New(validator.WithRequiredStructEnabled())
 
