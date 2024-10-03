@@ -5,6 +5,13 @@ services:
     environment:
       GOMODCACHE: /go/src/.modcache
       GOCACHE: /go/src/.cache
+      DB_HOST: localhost
+      DB_PORT: 3333
+      DB_USER: blog_user
+      DB_PASS: blog_user
+      DB_NAME: blog
+      JWT_KEY: 3e2fd0a9d492daa14a25870263e5fe1880924df60663d56ce3e9d7bf591ba971
+      BCRYPT_COST: 8
     volumes:
       - "./:/go/src"
     ports:
@@ -15,8 +22,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: user
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blog
+      MYSQL_USER: blog_user
+      MYSQL_PASSWORD: blog_user
     volumes:
       - "./.service-db:/var/lib/mysql"
     ports:
