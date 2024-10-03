@@ -12,7 +12,6 @@ import (
 type JwtClaims struct {
 	Id    int
 	Email string
-	jwt.MapClaims
 }
 
 var tokenExpiration = time.Now().Add(time.Hour * 72).Unix()
@@ -37,7 +36,10 @@ func GenerateToken(user entity.User) (string, error) {
 
 func GetJwtClaims(ctx *fiber.Ctx) (JwtClaims, error) {
 	user := ctx.Locals("user").(*jwt.Token)
-	claims := user.Claims.(JwtClaims)
+	claims := user.Claims.(jwt.MapClaims)
 
-	return claims, nil
+	return JwtClaims{
+		Id:    int(claims["id"].(float64)),
+		Email: claims["email"].(string),
+	}, nil
 }
