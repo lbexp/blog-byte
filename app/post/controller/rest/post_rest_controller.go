@@ -29,19 +29,19 @@ func (ctrl *postRestController) Create(ctx *fiber.Ctx) error {
 	request := new(CreateRequest)
 	err := ctx.BodyParser(request)
 	if err != nil {
-		log.Print("Create post controller request body parsing error")
+		log.Print("Create post controller request body parsing error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	err = ctrl.validate.Struct(request)
 	if err != nil {
-		log.Print("Create post controller not valid request error")
+		log.Print("Create post controller not valid request error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	jwtClaims, err := jwt_utils.GetJwtClaims(ctx)
 	if err != nil {
-		log.Print("Create post controller failed get jwt claims error")
+		log.Print("Create post controller failed get jwt claims error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
@@ -62,9 +62,9 @@ func (ctrl *postRestController) Create(ctx *fiber.Ctx) error {
 }
 
 func (ctrl *postRestController) GetById(ctx *fiber.Ctx) error {
-	id, err := strconv.Atoi(ctx.Params("id"))
+	id, err := strconv.Atoi(ctx.Params("post_id"))
 	if err != nil {
-		log.Print("Delete post controller id parsing error")
+		log.Print("GetById  post controller id parsing error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
@@ -100,7 +100,8 @@ func (ctrl *postRestController) GetAll(ctx *fiber.Ctx) error {
 		limit = 20
 	}
 
-	posts, err := ctrl.postUsecase.GetAll(ctx.UserContext(), limit, page)
+	offset := (page - 1) * limit
+	posts, err := ctrl.postUsecase.GetAll(ctx.UserContext(), limit, offset)
 	if err != nil {
 		return err
 	}
@@ -129,28 +130,28 @@ func (ctrl *postRestController) GetAll(ctx *fiber.Ctx) error {
 }
 
 func (ctrl *postRestController) Update(ctx *fiber.Ctx) error {
-	id, err := strconv.Atoi(ctx.Params("id"))
+	id, err := strconv.Atoi(ctx.Params("post_id"))
 	if err != nil {
-		log.Print("Delete post controller id parsing error")
+		log.Print("Update post controller id parsing error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
 	request := new(UpdateRequest)
 	err = ctx.BodyParser(request)
 	if err != nil {
-		log.Print("Update post controller request body parsing error")
+		log.Print("Update post controller request body parsing error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	err = ctrl.validate.Struct(request)
 	if err != nil {
-		log.Print("Update post controller not valid request error")
+		log.Print("Update post controller not valid request error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	jwtClaims, err := jwt_utils.GetJwtClaims(ctx)
 	if err != nil {
-		log.Print("Update post controller failed get jwt claims error")
+		log.Print("Update post controller failed get jwt claims error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
@@ -172,9 +173,9 @@ func (ctrl *postRestController) Update(ctx *fiber.Ctx) error {
 }
 
 func (ctrl *postRestController) Delete(ctx *fiber.Ctx) error {
-	id, err := strconv.Atoi(ctx.Params("id"))
+	id, err := strconv.Atoi(ctx.Params("post_id"))
 	if err != nil {
-		log.Print("Delete post controller id parsing error")
+		log.Print("Delete post controller id parsing error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
