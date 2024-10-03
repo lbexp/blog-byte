@@ -28,7 +28,7 @@ This project is only for assignment purpose.
 
 <img title="Database Schema Design" alt="Database Schema Design" src="/db-schema.png">
 
-Detail can be seen in [here]https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5fb079c7ebd442bff or in the `database/migrations` files.
+Detail can be seen in [here](https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5fb079c7ebd442bff) or in the `database/migrations` files.
 
 ## 📖 Requirements
 
