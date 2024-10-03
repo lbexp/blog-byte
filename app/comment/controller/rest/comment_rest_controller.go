@@ -27,20 +27,20 @@ func New(commentUsecase comment_usecase.CommentUsecase, validate *validator.Vali
 func (ctrl *commentRestController) Create(ctx *fiber.Ctx) error {
 	postId, err := strconv.Atoi(ctx.Params("post_id"))
 	if err != nil {
-		log.Print("Create comment controller post_id parsing error")
+		log.Print("Create comment controller post_id parsing error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
 	request := new(CreateRequest)
 	err = ctx.BodyParser(request)
 	if err != nil {
-		log.Print("Create comment controller body parsing error")
+		log.Print("Create comment controller body parsing error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	err = ctrl.validate.Struct(request)
 	if err != nil {
-		log.Print("Create comment controller not valid request error")
+		log.Print("Create comment controller not valid request error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
@@ -63,7 +63,7 @@ func (ctrl *commentRestController) Create(ctx *fiber.Ctx) error {
 func (ctrl *commentRestController) GetAllByPostId(ctx *fiber.Ctx) error {
 	postId, err := strconv.Atoi(ctx.Params("post_id"))
 	if err != nil {
-		log.Print("Delete post controller id parsing error")
+		log.Print("Delete post controller id parsing error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 

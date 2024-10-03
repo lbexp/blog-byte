@@ -20,6 +20,7 @@ type commentUsecase struct {
 func New(commentRepo comment_repository.CommentRepository, postRepo post_repository.PostRepository) CommentUsecase {
 	return &commentUsecase{
 		commentRepo: commentRepo,
+		postRepo:    postRepo,
 	}
 }
 

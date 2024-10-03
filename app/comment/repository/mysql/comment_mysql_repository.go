@@ -20,15 +20,9 @@ func New(conn *sql.DB) comment_repository.CommentRepository {
 func (repo *commentMysqlRepository) Insert(ctx context.Context, comment entity.Comment) error {
 	query := "INSERT INTO comments(post_id, author_name, content) VALUES(?, ?, ?)"
 
-	stmt, err := repo.Conn.PrepareContext(ctx, query)
+	_, err := repo.Conn.ExecContext(ctx, query, comment.PostId, comment.AuthorName, comment.Content)
 	if err != nil {
-		log.Print("Insert comment query preparation error")
-		return error_utils.ErrorInternalServer
-	}
-
-	_, err = stmt.ExecContext(ctx, comment.PostId, comment.AuthorName, comment.Content)
-	if err != nil {
-		log.Print("Insert comment query execution error")
+		log.Print("Insert comment mysql repository query execution error: ", err)
 		return error_utils.ErrorInternalServer
 	}
 
@@ -40,13 +34,13 @@ func (repo *commentMysqlRepository) GetAllByPostId(ctx context.Context, postId i
 
 	rows, err := repo.Conn.QueryContext(ctx, query, postId)
 	if err != nil {
-		log.Print("Select comments by post_id query error")
+		log.Print("Get all by post id comment repository query error: ", err)
 		return nil, error_utils.ErrorInternalServer
 	}
 	defer func() {
 		errClose := rows.Close()
 		if errClose != nil {
-			log.Print("Select comments by post_id query close error")
+			log.Print("Get all by post id comment repository query close error: ", err)
 		}
 	}()
 
@@ -62,7 +56,7 @@ func (repo *commentMysqlRepository) GetAllByPostId(ctx context.Context, postId i
 			&comment.CreatedAt,
 		)
 		if err != nil {
-			log.Print("Select comments by post_id data population error")
+			log.Print("Get all by post id comment repository data population error: ", err)
 			return nil, error_utils.ErrorInternalServer
 		}
 

@@ -11,7 +11,7 @@ type CommentDto struct {
 }
 
 type CreateRequest struct {
-	AuthorName string `json:"author_name" validate:"required,min=6,max=50"`
+	AuthorName string `json:"author_name" validate:"required,min=3,max=50"`
 	Content    string `json:"content" validate:"required"`
 }
 
