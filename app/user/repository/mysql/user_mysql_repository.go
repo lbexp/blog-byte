@@ -32,7 +32,7 @@ func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) (
 	if err != nil {
 		tx.Rollback()
 		log.Print("Insert user mysql repository insert query error: ", err)
-		return userRes, error_utils.ErrorInternalServer
+		return userRes, error_utils.ErrorBadRequest
 	}
 
 	userId, err := res.LastInsertId()
@@ -54,7 +54,7 @@ func (repo *userMysqlRepository) Insert(ctx context.Context, user entity.User) (
 	)
 	if err != nil {
 		tx.Rollback()
-		log.Print("Insert user query execution error: ", err)
+		log.Print("Insert user mysql repository select query execution error: ", err)
 		return userRes, error_utils.ErrorInternalServer
 	}
 

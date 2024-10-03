@@ -28,18 +28,18 @@ func New(userRepo user_repository.UserRepository) UserUsecase {
 func (ucase *userUsecase) Login(ctx context.Context, user entity.User) (entity.User, error) {
 	userRes, err := ucase.userRepo.GetByEmail(ctx, user.Email)
 	if err != nil {
-		return entity.User{}, err
+		return user, err
 	}
 
 	if !bcrypt_utils.CompareHashAndValue(userRes.PasswordHash, user.Password) {
 		log.Print("User login usecase compare password error: ", err)
-		return entity.User{}, error_utils.ErrorBadRequest
+		return user, error_utils.ErrorBadRequest
 	}
 
 	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
 		log.Print("User login usecase generate token error: ", err)
-		return entity.User{}, error_utils.ErrorInternalServer
+		return user, error_utils.ErrorInternalServer
 	}
 
 	userRes.AccessToken = token
@@ -51,19 +51,19 @@ func (ucase *userUsecase) Register(ctx context.Context, user entity.User) (entit
 	passwordHash, err := bcrypt_utils.GenerateHash(user.Password)
 	if err != nil {
 		log.Print("User register usecase generate password hash error: ", err)
-		return entity.User{}, error_utils.ErrorInternalServer
+		return user, error_utils.ErrorInternalServer
 	}
 
 	user.PasswordHash = passwordHash
 	userRes, err := ucase.userRepo.Insert(ctx, user)
 	if err != nil {
-		return entity.User{}, err
+		return user, err
 	}
 
 	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
 		log.Print("User register usecase generate token error: ", err)
-		return entity.User{}, error_utils.ErrorInternalServer
+		return user, error_utils.ErrorInternalServer
 	}
 
 	userRes.AccessToken = token
