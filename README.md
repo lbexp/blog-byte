@@ -2,7 +2,7 @@
 
 API for blog application.
 
-This project is only for assignment purpose.
+This project is only for assignment purpose. Not intended for production usage (at least for now).
 
 ## 💡 Endpoints
 
