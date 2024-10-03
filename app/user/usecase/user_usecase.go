@@ -32,12 +32,13 @@ func (ucase *userUsecase) Login(ctx context.Context, user entity.User) (entity.U
 	}
 
 	if !bcrypt_utils.CompareHashAndValue(userRes.PasswordHash, user.Password) {
-		return entity.User{}, err
+		log.Print("User login usecase compare password error: ", err)
+		return entity.User{}, error_utils.ErrorBadRequest
 	}
 
 	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
-		log.Print("User login usecase generate token error")
+		log.Print("User login usecase generate token error: ", err)
 		return entity.User{}, error_utils.ErrorInternalServer
 	}
 
@@ -49,7 +50,7 @@ func (ucase *userUsecase) Login(ctx context.Context, user entity.User) (entity.U
 func (ucase *userUsecase) Register(ctx context.Context, user entity.User) (entity.User, error) {
 	passwordHash, err := bcrypt_utils.GenerateHash(user.Password)
 	if err != nil {
-		log.Print("User register usecase generate password hash error")
+		log.Print("User register usecase generate password hash error: ", err)
 		return entity.User{}, error_utils.ErrorInternalServer
 	}
 
@@ -61,7 +62,7 @@ func (ucase *userUsecase) Register(ctx context.Context, user entity.User) (entit
 
 	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
-		log.Print("User register usecase generate token error")
+		log.Print("User register usecase generate token error: ", err)
 		return entity.User{}, error_utils.ErrorInternalServer
 	}
 

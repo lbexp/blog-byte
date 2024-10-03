@@ -27,13 +27,13 @@ func (ctrl *userRestController) Login(ctx *fiber.Ctx) error {
 	request := new(LoginRequest)
 	err := ctx.BodyParser(request)
 	if err != nil {
-		log.Print("Login controller body parsing error")
+		log.Print("Login controller body parsing error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	err = ctrl.validate.Struct(request)
 	if err != nil {
-		log.Print("Login controller request not valid error")
+		log.Print("Login controller request not valid error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
@@ -64,18 +64,18 @@ func (ctrl *userRestController) Register(ctx *fiber.Ctx) error {
 	request := new(RegisterRequest)
 	err := ctx.BodyParser(request)
 	if err != nil {
-		log.Print("Register request body parsing error")
+		log.Print("Register request body parsing error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	err = ctrl.validate.Struct(request)
 	if err != nil {
-		log.Print("Register request not valid error")
+		log.Print("Register request not valid error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
 	if request.Password != request.PasswordValidation {
-		log.Print("Register request password not valid error")
+		log.Print("Register request password not valid error: ", err)
 		return error_utils.ErrorBadRequest
 	}
 
