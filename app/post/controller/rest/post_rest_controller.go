@@ -48,7 +48,7 @@ func (ctrl *postRestController) Create(ctx *fiber.Ctx) error {
 	err = ctrl.postUsecase.Create(ctx.UserContext(), entity.Post{
 		Title:    request.Title,
 		Content:  request.Content,
-		AuthorId: jwtClaims.Sub,
+		AuthorId: jwtClaims.Id,
 	})
 	if err != nil {
 		return err
@@ -158,7 +158,7 @@ func (ctrl *postRestController) Update(ctx *fiber.Ctx) error {
 		Id:       id,
 		Title:    request.Title,
 		Content:  request.Content,
-		AuthorId: jwtClaims.Sub,
+		AuthorId: jwtClaims.Id,
 	})
 	if err != nil {
 		return err

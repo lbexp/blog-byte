@@ -35,10 +35,7 @@ func (ucase *userUsecase) Login(ctx context.Context, user entity.User) (entity.U
 		return entity.User{}, err
 	}
 
-	token, err := jwt_utils.GenerateToken(jwt_utils.JwtClaims{
-		Sub:   userRes.Id,
-		Email: userRes.Email,
-	})
+	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
 		log.Print("User login usecase generate token error")
 		return entity.User{}, error_utils.ErrorInternalServer
@@ -62,10 +59,7 @@ func (ucase *userUsecase) Register(ctx context.Context, user entity.User) (entit
 		return entity.User{}, err
 	}
 
-	token, err := jwt_utils.GenerateToken(jwt_utils.JwtClaims{
-		Sub:   userRes.Id,
-		Email: userRes.Email,
-	})
+	token, err := jwt_utils.GenerateToken(userRes)
 	if err != nil {
 		log.Print("User register usecase generate token error")
 		return entity.User{}, error_utils.ErrorInternalServer
