@@ -64,8 +64,8 @@ Detail can be seen in [here](https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5
   Make migrate-down
   ```
 
-- Cleanup services cache
+- Clean up service build caches
 
   ```bash
-  ./cleanup
+  ./clean.sh
   ```
