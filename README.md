@@ -1,6 +1,7 @@
 # Blog-byte
 
-API for blog appication.
+API for blog application.
+
 This project is only for assignment purpose.
 
 ## Requirements
