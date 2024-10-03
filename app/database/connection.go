@@ -11,12 +11,11 @@ import (
 
 func Open() (*sql.DB, error) {
 	dbHost := os.Getenv("DB_HOST")
-	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 	dbName := os.Getenv("DB_NAME")
 
-	dbUrl := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPass, dbHost, dbPort, dbName)
+	dbUrl := fmt.Sprintf("%s:%s@tcp(%s)/%s", dbUser, dbPass, dbHost, dbName)
 
 	dbConn, err := sql.Open("mysql", dbUrl)
 

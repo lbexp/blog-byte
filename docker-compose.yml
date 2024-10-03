@@ -5,8 +5,7 @@ services:
     environment:
       GOMODCACHE: /go/src/.modcache
       GOCACHE: /go/src/.cache
-      DB_HOST: localhost
-      DB_PORT: 3333
+      DB_HOST: mysql
       DB_USER: blog_user
       DB_PASS: blog_user
       DB_NAME: blog
@@ -21,6 +20,7 @@ services:
 
   db:
     image: mysql:8.0
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: blog
