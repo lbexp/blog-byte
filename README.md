@@ -24,10 +24,16 @@ This project is only for assignment purpose.
 - `POST api/v1/posts/{id}/comments` - Add a comment to a blog post.
 - `GET api/v1/posts/{id}/comments` - List all comments for a blog post.
 
+## 📕 Database Schema Design
+
+<img title="Database Schema Design" alt="Database Schema Design" src="/db-schema.png">
+
+Detail can be seen in [here]https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5fb079c7ebd442bff or in the `database/migrations` files.
+
 ## 📖 Requirements
 
 - go v1.21.0
-- docker
+- docker & docker-compose
 - golang-migrate/migrate (for db migrations)
 
 ## ⚙️ How to run locally
