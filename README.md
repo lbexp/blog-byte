@@ -1,6 +1,4 @@
-# ✍️ Blog-byte
-
-API for blog application.
+# ✍️ Blog-byte - Simple Blog Platform
 
 This project is only for assignment purpose. Not intended for production usage in its current state.
 
