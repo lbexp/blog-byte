@@ -55,3 +55,17 @@ Detail can be seen in [here](https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5
   ```bash
   Make migrate-up
   ```
+
+## 📋 Other commands
+
+- Rollback migration
+
+  ```bash
+  Make migrate-down
+  ```
+
+- Cleanup services cache
+
+  ```bash
+  ./cleanup
+  ```
