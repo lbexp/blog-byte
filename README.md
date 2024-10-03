@@ -30,6 +30,13 @@ This project is only for assignment purpose. Not intended for production usage i
 
 Detail can be seen in [here](https://dbdiagram.io/d/Blog-byte-DB-Schema-66feecf5fb079c7ebd442bff) or in the `database/migrations` files.
 
+## 💿 Key Technologies
+
+- HTTP Server
+- MySQL Connection
+- JWT Authentication
+- Request Validation
+
 ## 📖 Requirements
 
 - go v1.21.0
